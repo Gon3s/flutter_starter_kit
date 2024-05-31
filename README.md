@@ -1,6 +1,5 @@
 # Flutter Starter Kit
 
-![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
@@ -20,8 +19,16 @@ code .
 
 This project uses the following dependencies:
 
-- [riverpod](https://pub.dev/packages/riverpod) for state management
-- [freezed](https://pub.dev/packages/freezed) for code generation
-- [go_router](https://pub.dev/packages/go_router) for routing
+- [riverpod][riverpod_link] for state management
+- [freezed][freezed_link] for code generation
+- [go_router][go_router_link] for routing
 
 ### [LICENSE: MIT](../LICENSE.md)
+
+[riverpod_link]: https://pub.dev/packages/riverpod
+[freezed_link]: https://pub.dev/packages/freezed
+[go_router_link]: https://pub.dev/packages/go_router
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_link]: https://opensource.org/licenses/MIT
+[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
+[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
