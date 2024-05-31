@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:gones_starter_kit/features/home/presentation/home_screen.dart';
 import 'package:gones_starter_kit/localization/string_hardcoded.dart';
 import 'package:gones_starter_kit/routing/app_startup.dart';
 import 'package:gones_starter_kit/routing/not_found_screen.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
 
