@@ -1,5 +1,9 @@
 # Flutter Starter Kit
 
+![coverage][coverage_badge]
+[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
+[![License: MIT][license_badge]][license_link]
+
 This is a starter kit for Flutter applications. It provides a basic structure for your Flutter project, with pre-configured tools, patterns, and best practices.
 
 ## Project Setup
