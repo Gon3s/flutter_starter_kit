@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gones_starter_kit/commont_widgets/empty_placeholder_widget.dart';
+import 'package:gones_starter_kit/common_widgets/empty_placeholder_widget.dart';
 import 'package:gones_starter_kit/localization/string_hardcoded.dart';
 
 /// Simple not found screen used for 404 errors (page not found on web)

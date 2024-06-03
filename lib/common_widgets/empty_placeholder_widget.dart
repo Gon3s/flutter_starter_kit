@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gones_starter_kit/commont_widgets/primary_button.dart';
+import 'package:gones_starter_kit/common_widgets/primary_button.dart';
 import 'package:gones_starter_kit/constants/app_sizes.dart';
 import 'package:gones_starter_kit/routing/app_router.dart';
 
