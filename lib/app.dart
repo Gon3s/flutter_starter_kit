@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gones_starter_kit/constants/app_sizes.dart';
 import 'package:gones_starter_kit/routing/app_router.dart';
 
 /// The main application widget.
@@ -43,46 +44,38 @@ class MyApp extends ConsumerWidget {
           backgroundColor: primaryColor,
         ),
         //! Input Decoration
-        // inputDecorationTheme: InputDecorationTheme(
-        //   errorMaxLines: 3,
-        //   // errorStyle: AppStyles.textStyleError,
-        //   // prefixIconColor: Theme.of(context).colorScheme.primary,
-        //   // suffixIconColor: Theme.of(context).colorScheme.primary,
-        //   // hintStyle: AppStyles.hintTextStyle,
-        //   filled: true,
-        //   fillColor: Theme.of(context).colorScheme.surface,
-        //   disabledBorder: OutlineInputBorder(
-        //     borderSide: BorderSide(
-        //       color: Theme.of(context).colorScheme.,
-        //     ),
-        //     borderRadius: BorderRadius.circular(AppValues.textFieldRadius),
-        //   ),
-        //   enabledBorder: OutlineInputBorder(
-        //     borderSide: const BorderSide(
-        //       color: AppColors.black20,
-        //     ),
-        //     borderRadius: BorderRadius.circular(AppValues.textFieldRadius),
-        //   ),
-        //   focusedBorder: OutlineInputBorder(
-        //     borderSide: const BorderSide(
-        //       color: AppColors.darkBlue,
-        //     ),
-        //     borderRadius: BorderRadius.circular(AppValues.textFieldRadius),
-        //   ),
-        //   errorBorder: OutlineInputBorder(
-        //     borderSide: const BorderSide(
-        //       color: AppColors.backgroundCriticalStatus,
-        //     ),
-        //     borderRadius: BorderRadius.circular(AppValues.textFieldRadius),
-        //   ),
-        //   focusedErrorBorder: OutlineInputBorder(
-        //     borderSide: const BorderSide(
-        //       color: AppColors.black50,
-        //     ),
-        //     borderRadius: BorderRadius.circular(AppValues.textFieldRadius),
-        //   ),
-        //   contentPadding: const EdgeInsets.all(AppValues.defaultPadding),
-        // ),
+        inputDecorationTheme: InputDecorationTheme(
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey[400]!,
+            ),
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey[600]!,
+            ),
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: primaryColor,
+            ),
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );

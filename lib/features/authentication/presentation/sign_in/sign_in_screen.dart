@@ -92,6 +92,7 @@ class _SignInContentState extends ConsumerState<SignInContent> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
                     key: SignInScreen.emailKey,
@@ -107,7 +108,7 @@ class _SignInContentState extends ConsumerState<SignInContent> {
                     keyboardType: TextInputType.emailAddress,
                     onEditingComplete: _emailEditingComplete,
                   ),
-                  gapH8,
+                  gapH16,
                   TextFormField(
                     key: SignInScreen.passwordKey,
                     controller: _passwordController,
