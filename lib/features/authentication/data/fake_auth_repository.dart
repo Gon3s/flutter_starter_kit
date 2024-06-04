@@ -22,7 +22,7 @@ class FakeAuthRepository extends AuthRepository {
     FakeAppUser(
       uid: 'test@test.com'.split('').reversed.join(),
       email: 'test@test.com',
-      password: 'testPassword',
+      password: 'P@ssword',
     ),
   ];
 

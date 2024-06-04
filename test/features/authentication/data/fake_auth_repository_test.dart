@@ -6,7 +6,7 @@ import 'package:gones_starter_kit/features/authentication/domain/fake_app_user.d
 
 void main() {
   // Initialization
-  const testEmail = 'test@test.com';
+  const testEmail = 'fake@test.com';
   const testPassword = 'testPassword';
   const wrongTestPassword = 'short';
   final testUser = AppUser(
