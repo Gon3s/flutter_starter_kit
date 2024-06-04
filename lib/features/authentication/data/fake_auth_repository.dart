@@ -18,7 +18,13 @@ class FakeAuthRepository extends AuthRepository {
   final _authState = InMemoryStore<AppUser?>(null);
 
   /// List of fake users.
-  final List<FakeAppUser> fakeUsers = [];
+  final List<FakeAppUser> fakeUsers = [
+    FakeAppUser(
+      uid: 'test@test.com'.split('').reversed.join(),
+      email: 'test@test.com',
+      password: 'testPassword',
+    ),
+  ];
 
   @override
   Stream<AppUser?> authStateChanges() => _authState.stream;

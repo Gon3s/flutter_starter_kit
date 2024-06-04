@@ -3,10 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gones_starter_kit/features/home/presentation/counter_controller.dart';
 import 'package:mocktail/mocktail.dart';
 
-// a generic Listener class, used to keep track of when a provider notifies its listeners
-class Listener<T> extends Mock {
-  void call(T? previous, T next);
-}
+import '../../../mocks.dart';
 
 void main() {
   group('CounterController', () {

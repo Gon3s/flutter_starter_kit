@@ -46,34 +46,19 @@ class MyApp extends ConsumerWidget {
         //! Input Decoration
         inputDecorationTheme: InputDecorationTheme(
           disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey[400]!,
-            ),
-            borderRadius: BorderRadius.circular(Sizes.p16),
+            borderRadius: BorderRadius.circular(Sizes.p8),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey[600]!,
-            ),
-            borderRadius: BorderRadius.circular(Sizes.p16),
+            borderRadius: BorderRadius.circular(Sizes.p8),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: primaryColor,
-            ),
-            borderRadius: BorderRadius.circular(Sizes.p16),
+            borderRadius: BorderRadius.circular(Sizes.p8),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.circular(Sizes.p16),
+            borderRadius: BorderRadius.circular(Sizes.p8),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-            ),
-            borderRadius: BorderRadius.circular(Sizes.p16),
+            borderRadius: BorderRadius.circular(Sizes.p8),
           ),
         ),
       ),

@@ -13,6 +13,8 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     super.key,
     this.isLoading = false,
+    this.height = Sizes.p48,
+    this.width,
     this.onPressed,
   });
 
@@ -22,12 +24,21 @@ class PrimaryButton extends StatelessWidget {
   /// If true, a loading indicator will be displayed instead of the text.
   final bool isLoading;
 
+  /// The height of the button.
+  /// Default is 48.
+  final double height;
+
+  /// The width of the button.
+  /// Default is null.
+  final double? width;
+
   /// Callback to be called when the button is pressed.
   final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Sizes.p48,
+      height: height,
+      width: width,
       child: ElevatedButton(
         onPressed: onPressed,
         child: isLoading
