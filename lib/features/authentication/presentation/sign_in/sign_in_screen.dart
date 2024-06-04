@@ -167,13 +167,6 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Mot de passe oublié ?'.hardcoded,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ),
                     ],
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gones_starter_kit/features/authentication/presentation/account/account_controller.dart';
 import 'package:gones_starter_kit/features/home/presentation/counter_controller.dart';
 
 /// The home screen of the application.
@@ -15,6 +16,12 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout_outlined),
+            onPressed: () => ref.read(accountControllerProvider.notifier).signOut(),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
