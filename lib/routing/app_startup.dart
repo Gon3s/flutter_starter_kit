@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gones_starter_kit/constants/app_sizes.dart';
+import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
+import 'package:gones_starter_kit/features/authentication/data/session_storage.dart';
+import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_startup.g.dart';
-
-@Riverpod(keepAlive: false)
+part 'app_startup.freezed.dart';
 
 /// The application startup provider.
-Future<void> appStartup(AppStartupRef ref) async {
-  await Future<void>.delayed(const Duration(seconds: 2));
+@Riverpod(keepAlive: true)
+Future<AppDependencies> appStartup(AppStartupRef ref) async {
+  final sessionStore = ref.watch(sessionStorageProvider);
+
+  // * Load the session from the secure storage
+  final session = await sessionStore.read();
+
+  if (session != null) {
+    await ref.read(authRepositoryProvider).restoreSession(session);
+  }
+
+  return AppDependencies(
+    authSession: session,
+  );
+}
+
+/// Represents the dependencies required by the app.
+@freezed
+class AppDependencies with _$AppDependencies {
+  /// Creates a new instance of the [AppDependencies] class.
+  const factory AppDependencies({
+    required AuthSessionState? authSession,
+  }) = _AppDependencies;
 }
 
 /// Widget clas to manage asynchronous initialization of the application.

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gones_starter_kit/exceptions/app_exception.dart';
+import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
 import 'package:gones_starter_kit/features/authentication/data/fake_auth_repository.dart';
 import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
 import 'package:gones_starter_kit/features/authentication/domain/fake_app_user.dart';
@@ -165,5 +166,16 @@ void main() {
     await authRepository.signOut();
     expect(authRepository.currentUser, null);
     expect(authRepository.authStateChanges(), emits(null));
+  });
+
+  test('restoreSession change current user and emit changes', () async {
+    final authRepository = makeFakeAuthRepository();
+    addTearDown(authRepository.dispose);
+
+    final authSession = AuthSessionState(user: testUser);
+    await authRepository.restoreSession(authSession);
+
+    expect(authRepository.currentUser, testUser);
+    expect(authRepository.authStateChanges(), emits(testUser));
   });
 }

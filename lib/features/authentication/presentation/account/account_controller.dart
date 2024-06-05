@@ -1,3 +1,4 @@
+import 'package:gones_starter_kit/features/authentication/data/session_storage.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,7 +17,11 @@ class AccountController extends _$AccountController {
   /// The result of the `signOut` method is assigned to the `state` variable.
   Future<void> signOut() async {
     final authRepository = ref.read(authRepositoryProvider);
+    final sessionStorage = ref.read(sessionStorageProvider);
     state = const AsyncLoading();
-    state = await AsyncValue.guard(authRepository.signOut);
+    state = await AsyncValue.guard(() async {
+      await authRepository.signOut();
+      await sessionStorage.delete();
+    });
   }
 }

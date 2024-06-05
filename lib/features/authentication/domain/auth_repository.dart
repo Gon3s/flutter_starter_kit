@@ -1,3 +1,4 @@
+import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
 import 'package:gones_starter_kit/features/authentication/data/fake_auth_repository.dart';
 import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,13 +25,15 @@ abstract class AuthRepository {
   /// Signs out the current user.
   Future<void> signOut();
 
+  /// Retrieves users session from the storage.
+  Future<void> restoreSession(AuthSessionState session);
+
   /// Disposes of the resources used by the repository.
   void dispose();
 }
 
-@riverpod
-
 /// Provide authentication repository.
+@riverpod
 AuthRepository authRepository(AuthRepositoryRef ref) {
   final auth = FakeAuthRepository();
   ref.onDispose(auth.dispose);

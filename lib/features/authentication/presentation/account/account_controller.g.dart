@@ -6,7 +6,7 @@ part of 'account_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$accountControllerHash() => r'9f6f102b5d9d35f4f693b4de50de79dd3a5cc6f8';
+String _$accountControllerHash() => r'4f3628a162bd6ee955eea849d00d54895a41a87d';
 
 /// The controller class for the account feature.
 /// This class extends the generated `_$AccountController` class.

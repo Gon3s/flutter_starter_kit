@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:gones_starter_kit/exceptions/app_exception.dart';
+import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
 import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
 import 'package:gones_starter_kit/features/authentication/domain/fake_app_user.dart';
@@ -81,5 +82,10 @@ class FakeAuthRepository extends AuthRepository {
   @override
   Future<void> signOut() async {
     _authState.value = null;
+  }
+
+  @override
+  Future<void> restoreSession(AuthSessionState session) async {
+    _authState.value = session.user;
   }
 }
