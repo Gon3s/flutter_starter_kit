@@ -1,12 +1,14 @@
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gones_starter_kit/app.dart';
+import 'package:gones_starter_kit/firebase_options.dart';
 import 'package:gones_starter_kit/localization/string_hardcoded.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // * Register error handlers. For more info, see:
   // * https://docs.flutter.dev/testing/errors
@@ -14,6 +16,11 @@ void main() {
 
   // * Setup system UI overlay style
   _setupSystemUIOverlayStyle();
+
+  // * Setup firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     const ProviderScope(

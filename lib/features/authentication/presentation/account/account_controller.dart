@@ -1,5 +1,6 @@
 import 'package:gones_starter_kit/features/authentication/data/session_storage.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
+import 'package:gones_starter_kit/utils/notification_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account_controller.g.dart';
@@ -22,6 +23,8 @@ class AccountController extends _$AccountController {
     state = await AsyncValue.guard(() async {
       await authRepository.signOut();
       await sessionStorage.delete();
+
+      await ref.read(notificationServiceProvider).unregisterDevice();
     });
   }
 }

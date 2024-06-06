@@ -1,6 +1,7 @@
 import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
 import 'package:gones_starter_kit/features/authentication/data/session_storage.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
+import 'package:gones_starter_kit/utils/notification_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_in_controller.g.dart';
@@ -24,6 +25,8 @@ class SignInController extends _$SignInController {
       () async {
         await authRepository.signInWithEmailAndPassword((email: email, password: password));
         await sessionStorage.write(AuthSessionState(user: authRepository.currentUser!));
+
+        await ref.read(notificationServiceProvider).registerDevice();
       },
     );
   }
