@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -5,6 +7,7 @@ import 'package:gones_starter_kit/constants/app_sizes.dart';
 import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
 import 'package:gones_starter_kit/features/authentication/data/session_storage.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
+import 'package:gones_starter_kit/utils/notification_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_startup.g.dart';
@@ -20,6 +23,8 @@ Future<AppDependencies> appStartup(AppStartupRef ref) async {
 
   if (session != null) {
     await ref.read(authRepositoryProvider).restoreSession(session);
+
+    await ref.read(notificationServiceProvider).registerDevice();
   }
 
   return AppDependencies(

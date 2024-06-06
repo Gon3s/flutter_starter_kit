@@ -8,6 +8,7 @@ import 'package:gones_starter_kit/features/authentication/data/session_storage.d
 import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
 import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
 import 'package:gones_starter_kit/features/authentication/presentation/sign_in/sign_in_controller.dart';
+import 'package:gones_starter_kit/utils/notification_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../mocks.dart';
@@ -22,11 +23,16 @@ void main() {
     ),
   );
 
-  ProviderContainer makeProviderContainer(MockAuthRepository authRepository, MockSessionStorage sessionStorage) {
+  ProviderContainer makeProviderContainer(
+    MockAuthRepository authRepository,
+    MockSessionStorage sessionStorage,
+    MockNotificationService notificationService,
+  ) {
     final container = ProviderContainer(
       overrides: [
         authRepositoryProvider.overrideWithValue(authRepository),
         sessionStorageProvider.overrideWithValue(sessionStorage),
+        notificationServiceProvider.overrideWithValue(notificationService),
       ],
     );
     addTearDown(container.dispose);
@@ -41,13 +47,19 @@ void main() {
     // setup
     final authRepository = MockAuthRepository();
     final sessionStorage = MockSessionStorage();
-    final container = makeProviderContainer(authRepository, sessionStorage);
+    final notificationService = MockNotificationService();
+    final container = makeProviderContainer(
+      authRepository,
+      sessionStorage,
+      notificationService,
+    );
 
     when(
       () => authRepository.signInWithEmailAndPassword((email: testEmail, password: testPassword)),
     ).thenAnswer((_) => Future.value());
     when(() => authRepository.currentUser).thenAnswer((_) => authSession.user);
     when(() => sessionStorage.write(authSession)).thenAnswer((_) => Future.value());
+    when(notificationService.registerDevice).thenAnswer((_) => Future.value());
 
     final listener = Listener<AsyncValue<void>>();
     container.listen(
@@ -75,14 +87,21 @@ void main() {
     ]);
     verifyNoMoreInteractions(listener);
     verify(() => sessionStorage.write(authSession)).called(1);
+    verify(notificationService.registerDevice).called(1);
   });
 
   test('submit sign in form failed', () async {
     // setup
     final authRepository = MockAuthRepository();
     final sessionStorage = MockSessionStorage();
+    final notificationService = MockNotificationService();
+
     final exception = Exception('error');
-    final container = makeProviderContainer(authRepository, sessionStorage);
+    final container = makeProviderContainer(
+      authRepository,
+      sessionStorage,
+      notificationService,
+    );
 
     when(
       () => authRepository.signInWithEmailAndPassword(
@@ -121,5 +140,6 @@ void main() {
     ]);
     verifyNoMoreInteractions(listener);
     verifyNever(() => sessionStorage.write(authSession));
+    verifyNever(notificationService.registerDevice);
   });
 }
