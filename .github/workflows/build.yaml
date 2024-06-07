@@ -22,6 +22,8 @@ jobs:
 
       - name: Firebase login
         uses: w9jds/firebase-action@master
+        with:
+          args: login
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
