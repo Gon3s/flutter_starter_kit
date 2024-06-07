@@ -20,11 +20,6 @@ jobs:
           channel: stable
           version: latest
 
-      - name: Firebase login
-        uses: w9jds/firebase-action@master
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
       - name: Install dependencies
         run: flutter pub get
 
