@@ -23,8 +23,8 @@ jobs:
       - name: Install Firebase CLI
         run: curl -sL https://firebase.tools | bash
 
-      - name: Login to Firebase
-        run: firebase login --token ${{ secrets.FIREBASE_TOKEN }}
+      - name: Login and select Firebase project
+        run: firebase use "$FIREBASE_PROJECT_ID" --token ${{ secrets.FIREBASE_TOKEN }}
 
       - name: init Firebase
         run: firebase init
