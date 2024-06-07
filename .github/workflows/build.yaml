@@ -20,6 +20,15 @@ jobs:
           channel: stable
           version: latest
 
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: Login to Firebase
+        run: firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: init Firebase
+        run: firebase init
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -28,6 +37,3 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      
-    
