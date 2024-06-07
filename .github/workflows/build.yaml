@@ -24,10 +24,7 @@ jobs:
         run: curl -sL https://firebase.tools | bash
 
       - name: Login and select Firebase project
-        run: firebase use "$FIREBASE_PROJECT_ID" --token ${{ secrets.FIREBASE_TOKEN }}
-
-      - name: init Firebase
-        run: firebase init
+        run: firebase use --token ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Install dependencies
         run: flutter pub get
