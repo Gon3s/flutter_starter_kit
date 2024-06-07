@@ -20,6 +20,20 @@ jobs:
           channel: stable
           version: latest
 
+      - name: Firebase login
+        uses: w9jds/firebase-action@master
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+      
+      - name: Install Flutterfire CLI
+        run: dart pub global activate flutterfire_cli
+
+      - name: Configure Flutterfire
+        run: flutterfire configure
+
       - name: Install dependencies
         run: flutter pub get
 
