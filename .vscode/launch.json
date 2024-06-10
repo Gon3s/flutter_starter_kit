@@ -5,21 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "gones_starter_kit",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "gones_starter_kit (profile mode)",
+      "name": "Launch development",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "program": "lib/main.dart",
+      "args": ["--flavor", "development", "--target", "lib/main.dart"]
     },
     {
-      "name": "gones_starter_kit (release mode)",
+      "name": "Launch production",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "program": "lib/main.dart",
+      "args": ["--flavor", "production", "--target", "lib/main.dart"]
     }
   ]
 }

@@ -1,4 +1,4 @@
-package com.gones.starter_kit
+package com.gones.starterKit
 
 import io.flutter.embedding.android.FlutterActivity
 
