@@ -81,6 +81,8 @@ class FakeAuthRepository extends AuthRepository {
 
   @override
   Future<void> signOut() async {
+    await delay(addDelay: addDelay);
+
     _authState.value = null;
   }
 

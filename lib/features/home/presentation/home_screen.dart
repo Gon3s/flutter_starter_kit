@@ -13,13 +13,21 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final accountController = ref.watch(accountControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout_outlined),
-            onPressed: () => ref.read(accountControllerProvider.notifier).signOut(),
+            icon: accountController.isLoading
+                ? const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 2,
+                  )
+                : const Icon(Icons.logout_outlined),
+            onPressed: () =>
+                accountController.isLoading ? null : ref.read(accountControllerProvider.notifier).signOut(),
           ),
         ],
       ),

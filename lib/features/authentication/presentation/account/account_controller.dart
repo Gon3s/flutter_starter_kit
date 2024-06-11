@@ -19,12 +19,16 @@ class AccountController extends _$AccountController {
   Future<void> signOut() async {
     final authRepository = ref.read(authRepositoryProvider);
     final sessionStorage = ref.read(sessionStorageProvider);
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
+
+    state = const AsyncLoading<void>();
+
+    try {
       await authRepository.signOut();
       await sessionStorage.delete();
 
       await ref.read(notificationServiceProvider).unregisterDevice();
-    });
+    } catch (e) {
+      state = AsyncError<void>(e, StackTrace.current);
+    }
   }
 }
