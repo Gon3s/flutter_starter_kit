@@ -29,7 +29,7 @@ dev_dependencies:
   json_serializable: 6.8.0
   mocktail: 1.0.3
   riverpod_generator: 2.4.2
-  very_good_analysis: 5.1.0
+  very_good_analysis: 7.0.0
 
 dependency_overrides: 
   meta: 1.14.0
