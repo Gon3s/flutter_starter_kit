@@ -17,6 +17,7 @@ Future<void> run(HookContext context) async {
       'lib/db/secure_storage.dart',
       'lib/exceptions/app_exception.dart',
       'lib/exceptions/async_value_extensions.dart',
+      'lib/utils/in_memory_state.dart',
       'test/features/authentication',
     ];
     for (final path in authOnlyFiles) {
@@ -69,6 +70,12 @@ Future<void> run(HookContext context) async {
       createProgress.fail('flutter create failed:\n${create.stderr}');
       return;
     }
+
+    // `flutter create` adds a default counter test that references a `MyApp`
+    // class that does not exist in this template — remove it.
+    final defaultTest = File('test/widget_test.dart');
+    if (defaultTest.existsSync()) defaultTest.deleteSync();
+
     createProgress.complete('Native platforms scaffolded.');
   }
 

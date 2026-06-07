@@ -104,8 +104,10 @@ jobs:
       - name: Generate project
         run: |
           mkdir -p /tmp/demo_app
+          # Hooks run in the CWD of `mason make`, so generate from inside the
+          # target directory (output defaults to ".").
+          cd /tmp/demo_app
           mason make flutter_starter_kit \
-            -o /tmp/demo_app \
             -c /tmp/vars.json \
             --on-conflict overwrite
 
