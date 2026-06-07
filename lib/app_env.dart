@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart' hide FirebaseOptions;
 import 'package:gones_starter_kit/firebase_options.dart';
 import 'package:gones_starter_kit/utils/colored_debug_printer.dart';
 
