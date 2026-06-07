@@ -4,20 +4,44 @@ import 'package:mason/mason.dart';
 Future<void> run(HookContext context) async {
   final avecAuth = context.vars['avec_auth'] as bool;
   final avecFirebase = context.vars['avec_firebase'] as bool;
+  final appName = context.vars['app_name'] as String;
+  final orgName = context.vars['org_name'] as String;
 
-  // Remove auth feature directory if not needed
+  // Remove auth feature and its auth-only dependencies if not needed.
   if (!avecAuth) {
     final authDir = Directory('lib/features/authentication');
-    if (authDir.existsSync()) {
-      authDir.deleteSync(recursive: true);
-      context.logger.info('Removed authentication feature.');
+    if (authDir.existsSync()) authDir.deleteSync(recursive: true);
+
+    // These files are only used by the authentication feature.
+    final authOnlyFiles = [
+      'lib/db/secure_storage.dart',
+      'lib/exceptions/app_exception.dart',
+      'lib/exceptions/async_value_extensions.dart',
+      'test/features/authentication',
+    ];
+    for (final path in authOnlyFiles) {
+      final dir = Directory(path);
+      final file = File(path);
+      if (dir.existsSync()) {
+        dir.deleteSync(recursive: true);
+      } else if (file.existsSync()) {
+        file.deleteSync();
+      }
     }
+
+    // Remove now-empty lib/db directory.
+    final dbDir = Directory('lib/db');
+    if (dbDir.existsSync() && dbDir.listSync().isEmpty) {
+      dbDir.deleteSync();
+    }
+    context.logger.info('Removed authentication feature.');
   }
 
-  // Remove Firebase-specific files if not needed
+  // Remove Firebase-specific files if not needed.
   if (!avecFirebase) {
     final filesToRemove = [
       'lib/utils/notification_service.dart',
+      'lib/firebase_options.dart',
       'lib/firebase_options.example.dart',
     ];
     for (final path in filesToRemove) {
@@ -25,6 +49,27 @@ Future<void> run(HookContext context) async {
       if (file.existsSync()) file.deleteSync();
     }
     context.logger.info('Removed Firebase files.');
+  }
+
+  // Add native platform folders (android/ios/...) if they are missing.
+  // `flutter create .` is the documented way to add platform support to an
+  // existing project; it preserves existing lib/ and pubspec.yaml.
+  if (!Directory('android').existsSync() && !Directory('ios').existsSync()) {
+    final createProgress =
+        context.logger.progress('Scaffolding native platforms...');
+    final create = await Process.run('flutter', [
+      'create',
+      '--org',
+      orgName,
+      '--project-name',
+      appName,
+      '.',
+    ]);
+    if (create.exitCode != 0) {
+      createProgress.fail('flutter create failed:\n${create.stderr}');
+      return;
+    }
+    createProgress.complete('Native platforms scaffolded.');
   }
 
   // Run flutter pub get

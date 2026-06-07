@@ -340,8 +340,9 @@ secret is set. To enable them, add these repository secrets:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please make sure `flutter analyze` and `flutter test`
-pass before opening a pull request.
+Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for the dev
+setup and conventions. In short: keep `lib/` and the brick in sync, and make
+sure `flutter analyze` and `flutter test` pass before opening a pull request.
 
 ## License
 

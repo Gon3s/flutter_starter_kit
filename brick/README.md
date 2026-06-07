@@ -21,8 +21,16 @@ mkdir my_app && cd my_app
 mason make flutter_starter_kit
 ```
 
-You'll be prompted for the variables below. The `post_gen` hook then runs
-`flutter pub get` and `build_runner` automatically, and prints your next steps.
+You'll be prompted for the variables below. The `post_gen` hook then:
+
+1. Removes the files for any disabled option (auth / Firebase),
+2. Scaffolds the native platform folders via `flutter create` (preserving the
+   generated `lib/`),
+3. Runs `flutter pub get` and `build_runner`,
+4. Prints your next steps.
+
+The generated project is immediately ready to `flutter analyze`, `flutter test`,
+and `flutter run -t lib/main_dev.dart`.
 
 ## Variables
 

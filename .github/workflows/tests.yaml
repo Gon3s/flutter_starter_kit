@@ -21,6 +21,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          cache: true
 
       - name: Write firebase_options.dart
         env:
@@ -56,4 +57,62 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Run tests
+        run: flutter test
+
+  brick:
+    name: Brick generation (${{ matrix.label }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: full
+            avec_firebase: true
+            avec_auth: true
+          - label: no-auth
+            avec_firebase: true
+            avec_auth: false
+          - label: minimal
+            avec_firebase: false
+            avec_auth: false
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Mason
+        run: dart pub global activate mason_cli
+
+      - name: Register brick
+        run: mason add flutter_starter_kit --path ./brick
+
+      - name: Write generation config
+        run: |
+          cat > /tmp/vars.json <<EOF
+          {
+            "app_name": "demo_app",
+            "org_name": "com.example",
+            "app_description": "Generated demo app.",
+            "avec_firebase": ${{ matrix.avec_firebase }},
+            "avec_auth": ${{ matrix.avec_auth }}
+          }
+          EOF
+
+      - name: Generate project
+        run: |
+          mkdir -p /tmp/demo_app
+          mason make flutter_starter_kit \
+            -o /tmp/demo_app \
+            -c /tmp/vars.json \
+            --on-conflict overwrite
+
+      - name: Analyze generated project
+        working-directory: /tmp/demo_app
+        run: flutter analyze --no-fatal-infos
+
+      - name: Test generated project
+        working-directory: /tmp/demo_app
         run: flutter test

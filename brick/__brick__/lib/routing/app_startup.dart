@@ -19,7 +19,7 @@ part 'app_startup.freezed.dart';
 
 /// The application startup provider.
 @Riverpod(keepAlive: true)
-Future<AppDependencies> appStartup(AppStartupRef ref) async {
+Future<AppDependencies> appStartup(Ref ref) async {
   {{#avec_auth}}
   final sessionStore = ref.watch(sessionStorageProvider);
   final session = await sessionStore.read();
@@ -40,7 +40,7 @@ Future<AppDependencies> appStartup(AppStartupRef ref) async {
 
 /// Represents the dependencies required by the app.
 @freezed
-class AppDependencies with _$AppDependencies {
+abstract class AppDependencies with _$AppDependencies {
   /// Creates a new instance of the [AppDependencies] class.
   const factory AppDependencies({
     {{#avec_auth}}

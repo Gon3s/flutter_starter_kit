@@ -12,6 +12,7 @@ import 'package:{{app_name}}/routing/app_startup.dart';
 import 'package:{{app_name}}/routing/go_router_refresh_stream.dart';
 {{/avec_auth}}
 import 'package:{{app_name}}/routing/not_found_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -40,7 +41,7 @@ enum AppRouter {
 
 /// The application router provider.
 @riverpod
-GoRouter goRouter(GoRouterRef ref) {
+GoRouter goRouter(Ref ref) {
   final appStartupState = ref.watch(appStartupProvider);
   {{#avec_auth}}
   final authRepository = ref.watch(authRepositoryProvider);

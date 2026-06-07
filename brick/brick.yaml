@@ -2,7 +2,7 @@ name: flutter_starter_kit
 description: A Flutter starter kit with Riverpod, GoRouter, Freezed, and optional Firebase + authentication.
 version: 0.1.0+1
 environment:
-  mason: ">=0.1.0-dev.52 <0.1.0"
+  mason: ">=0.1.0 <1.0.0"
 
 vars:
   app_name:
