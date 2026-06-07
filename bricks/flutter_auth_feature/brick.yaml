@@ -1,0 +1,18 @@
+name: flutter_auth_feature
+description: Adds Firebase Auth (Email/Password) feature to an existing Flutter/Riverpod project.
+version: 0.1.0+1
+environment:
+  mason: ">=0.1.0-dev.52 <0.1.0"
+
+vars:
+  app_name:
+    type: string
+    description: The existing app package name (snake_case)
+    prompt: "Your app package name (snake_case)?"
+    default: my_app
+
+  output_dir:
+    type: string
+    description: Output directory for the feature
+    prompt: "Output directory?"
+    default: lib/features/authentication

@@ -1,6 +1,6 @@
-import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
-import 'package:gones_starter_kit/features/authentication/data/firebase_auth_repository.dart';
-import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
+import 'package:{{app_name}}/features/authentication/data/auth_session.dart';
+import 'package:{{app_name}}/features/authentication/data/firebase_auth_repository.dart';
+import 'package:{{app_name}}/features/authentication/domain/app_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_repository.g.dart';

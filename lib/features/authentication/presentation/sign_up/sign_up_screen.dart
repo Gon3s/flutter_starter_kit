@@ -4,14 +4,14 @@ import 'package:gones_starter_kit/common_widgets/primary_button.dart';
 import 'package:gones_starter_kit/constants/app_sizes.dart';
 import 'package:gones_starter_kit/exceptions/async_value_extensions.dart';
 import 'package:gones_starter_kit/features/authentication/presentation/auth_validators.dart';
-import 'package:gones_starter_kit/features/authentication/presentation/sign_in/sign_in_controller.dart';
+import 'package:gones_starter_kit/features/authentication/presentation/sign_up/sign_up_controller.dart';
 import 'package:gones_starter_kit/localization/app_strings.dart';
 import 'package:gones_starter_kit/routing/app_router.dart';
 
-/// Sign In Screen
-class SignInScreen extends StatelessWidget {
+/// Sign Up Screen
+class SignUpScreen extends StatelessWidget {
   /// Constructor
-  const SignInScreen({super.key});
+  const SignUpScreen({super.key});
 
   /// Key for email field
   static const emailKey = Key('email');
@@ -30,11 +30,17 @@ class SignInScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               gapH64,
-              Text(s.welcomeBack, style: Theme.of(context).textTheme.headlineLarge),
+              Text(
+                s.createAccountTitle,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
               gapH4,
-              Text(s.signInSubtitle, style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                s.createAccountSubtitle,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               gapH32,
-              const Expanded(child: SignInContent()),
+              const Expanded(child: _SignUpContent()),
             ],
           ),
         ),
@@ -43,16 +49,14 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-/// Sign In Content
-class SignInContent extends ConsumerStatefulWidget {
-  /// Constructor
-  const SignInContent({super.key});
+class _SignUpContent extends ConsumerStatefulWidget {
+  const _SignUpContent();
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SignInContentState();
+  ConsumerState<_SignUpContent> createState() => _SignUpContentState();
 }
 
-class _SignInContentState extends ConsumerState<SignInContent> with AuthValidators {
+class _SignUpContentState extends ConsumerState<_SignUpContent> with AuthValidators {
   final _formKey = GlobalKey<FormState>();
   final _node = FocusScopeNode();
   final _emailController = TextEditingController();
@@ -64,17 +68,6 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
   var _submitted = false;
   var _isObscure = true;
 
-  Future<void> _submit() async {
-    setState(() => _submitted = true);
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    if (_formKey.currentState!.validate()) {
-      await ref.read(signInControllerProvider.notifier).submit(
-            email: _email,
-            password: _password,
-          );
-    }
-  }
-
   @override
   void dispose() {
     _node.dispose();
@@ -83,11 +76,22 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
     super.dispose();
   }
 
+  Future<void> _submit() async {
+    setState(() => _submitted = true);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (_formKey.currentState!.validate()) {
+      await ref.read(signUpControllerProvider.notifier).submit(
+            email: _email,
+            password: _password,
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
-    ref.listen(signInControllerProvider, (_, state) => state.showSnackBarOnError(context));
-    final state = ref.watch(signInControllerProvider);
+    ref.listen(signUpControllerProvider, (_, state) => state.showSnackBarOnError(context));
+    final state = ref.watch(signUpControllerProvider);
 
     return FocusScope(
       node: _node,
@@ -101,7 +105,7 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
-                    key: SignInScreen.emailKey,
+                    key: SignUpScreen.emailKey,
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: s.email,
@@ -119,7 +123,7 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
                   ),
                   gapH16,
                   TextFormField(
-                    key: SignInScreen.passwordKey,
+                    key: SignUpScreen.passwordKey,
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: s.password,
@@ -134,24 +138,21 @@ class _SignInContentState extends ConsumerState<SignInContent> with AuthValidato
                     autocorrect: false,
                     obscureText: _isObscure,
                     textInputAction: TextInputAction.done,
-                    onEditingComplete: () {
-                      if (!canSubmitEmail(_email)) {
-                        _node.nextFocus();
-                        return;
-                      }
-                      _submit();
-                    },
+                    onEditingComplete: _submit,
                   ),
                   gapH16,
                   GestureDetector(
-                    onTap: () => ref.read(goRouterProvider).goNamed(AppRouter.signUp.name),
-                    child: Text(s.createAccount, style: Theme.of(context).textTheme.bodySmall),
+                    onTap: () => ref.read(goRouterProvider).goNamed(AppRouter.login.name),
+                    child: Text(
+                      s.alreadyHaveAccount,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 ],
               ),
             ),
             PrimaryButton(
-              text: s.signIn,
+              text: s.signUp,
               onPressed: state.isLoading ? null : _submit,
               width: double.infinity,
               isLoading: state.isLoading,

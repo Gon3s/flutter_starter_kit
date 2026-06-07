@@ -1,14 +1,18 @@
 import 'dart:async';
 
+{{#avec_firebase}}
 import 'package:firebase_messaging/firebase_messaging.dart';
+{{/avec_firebase}}
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gones_starter_kit/bootstrap.dart';
-import 'package:gones_starter_kit/constants/app_sizes.dart';
-import 'package:gones_starter_kit/routing/app_router.dart';
-import 'package:gones_starter_kit/utils/colored_debug_printer.dart';
-import 'package:gones_starter_kit/utils/notification_service.dart';
+import 'package:{{app_name}}/bootstrap.dart';
+import 'package:{{app_name}}/constants/app_sizes.dart';
+import 'package:{{app_name}}/routing/app_router.dart';
+{{#avec_firebase}}
+import 'package:{{app_name}}/utils/colored_debug_printer.dart';
+import 'package:{{app_name}}/utils/notification_service.dart';
+{{/avec_firebase}}
 
 /// The main application widget.
 class MyApp extends ConsumerStatefulWidget {
@@ -20,62 +24,53 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  StreamSubscription<String>? _fcmtokenSubscription;
+  {{#avec_firebase}}
+  StreamSubscription<String>? _fcmTokenSubscription;
 
   @override
   void initState() {
     super.initState();
-
     _setupPushNotifications();
   }
 
   @override
   void dispose() {
-    _fcmtokenSubscription?.cancel();
+    _fcmTokenSubscription?.cancel();
     super.dispose();
   }
 
   Future<void> _setupPushNotifications() async {
-    // Listen for incoming message while the app is in the foreground
     FirebaseMessaging.onMessage.listen((message) {
-      Print.green('DLOG', 'Handling a message in the foreground: ${message.messageId}');
+      Print.green('DLOG', 'Foreground message: ${message.messageId}');
       ref.read(notificationServiceProvider).processDataMessage(message);
     });
 
-    // Listen for incoming message while the app is in the background
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-    // Request permission to display notifications
-    // Called only once when the app is first installed
     await FirebaseMessaging.instance.requestPermission();
 
-    // Listen for token refresh and update the token in the backend
-    _fcmtokenSubscription = FirebaseMessaging.instance.onTokenRefresh.listen((token) {
+    _fcmTokenSubscription = FirebaseMessaging.instance.onTokenRefresh.listen((token) {
       Print.green('DLOG', 'FCM Token: $token');
       ref.read(notificationServiceProvider).registerToken(token);
     });
 
-    // Get any messages which caused the application to open from
-    // a terminated state.
     final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) _handleMessage(initialMessage);
 
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
   void _handleMessage(RemoteMessage message) {
-    Print.green('DLOG', 'Handling a message: ${message.messageId}');
-    for (final entry in message.data.entries) {
-      Print.green('DLOG', 'Data: ${entry.key} -> ${entry.value}');
-    }
+    Print.green('DLOG', 'Message opened: ${message.messageId}');
   }
+  {{/avec_firebase}}
+  {{^avec_firebase}}
+  @override
+  void initState() {
+    super.initState();
+  }
+  {{/avec_firebase}}
 
-  /// The primary color of the application.
   static const primaryColor = Colors.green;
 
   @override
@@ -116,23 +111,12 @@ class _MyAppState extends ConsumerState<MyApp> {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: primaryColor,
         ),
-        //! Input Decoration
         inputDecorationTheme: InputDecorationTheme(
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Sizes.p8),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Sizes.p8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Sizes.p8),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Sizes.p8),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Sizes.p8),
-          ),
+          disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
+          errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
+          focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Sizes.p8)),
         ),
       ),
       debugShowCheckedModeBanner: false,

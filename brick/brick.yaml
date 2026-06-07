@@ -1,0 +1,36 @@
+name: flutter_starter_kit
+description: A Flutter starter kit with Riverpod, GoRouter, Freezed, and optional Firebase + authentication.
+version: 0.1.0+1
+environment:
+  mason: ">=0.1.0-dev.52 <0.1.0"
+
+vars:
+  app_name:
+    type: string
+    description: The application name (snake_case, e.g. my_app)
+    prompt: "App name (snake_case)?"
+    default: my_app
+
+  org_name:
+    type: string
+    description: Organisation identifier (e.g. com.example)
+    prompt: "Organisation identifier (e.g. com.example)?"
+    default: com.example
+
+  app_description:
+    type: string
+    description: Short description of the app
+    prompt: "App description?"
+    default: "A new Flutter app."
+
+  avec_firebase:
+    type: boolean
+    description: Include Firebase (Analytics, Crashlytics, Messaging)?
+    prompt: "Include Firebase?"
+    default: true
+
+  avec_auth:
+    type: boolean
+    description: Include authentication feature (requires Firebase)?
+    prompt: "Include authentication?"
+    default: true

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gones_starter_kit/features/home/presentation/counter_controller.dart';
-import 'package:gones_starter_kit/localization/app_strings.dart';
-import 'package:gones_starter_kit/routing/app_router.dart';
+import 'package:{{app_name}}/features/home/presentation/counter_controller.dart';
+import 'package:{{app_name}}/localization/app_strings.dart';
+{{#avec_auth}}
+import 'package:{{app_name}}/routing/app_router.dart';
+{{/avec_auth}}
 
 /// The home screen of the application.
 class HomeScreen extends ConsumerWidget {
@@ -16,17 +18,19 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(s.homeTitle),
+        {{#avec_auth}}
         actions: [
           IconButton(
             icon: const Icon(Icons.account_circle_outlined),
             onPressed: () => ref.read(goRouterProvider).goNamed(AppRouter.account.name),
           ),
         ],
+        {{/avec_auth}}
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Text(s.counterLabel),
             Text(
               '${ref.watch(counterControllerProvider)}',

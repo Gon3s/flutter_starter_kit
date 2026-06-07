@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gones_starter_kit/features/authentication/domain/auth_repository.dart';
-import 'package:gones_starter_kit/features/authentication/presentation/account/account_screen.dart';
-import 'package:gones_starter_kit/features/authentication/presentation/sign_in/sign_in_screen.dart';
-import 'package:gones_starter_kit/features/authentication/presentation/sign_up/sign_up_screen.dart';
-import 'package:gones_starter_kit/features/home/presentation/home_screen.dart';
-import 'package:gones_starter_kit/routing/app_startup.dart';
-import 'package:gones_starter_kit/routing/go_router_refresh_stream.dart';
-import 'package:gones_starter_kit/routing/not_found_screen.dart';
+{{#avec_auth}}
+import 'package:{{app_name}}/features/authentication/domain/auth_repository.dart';
+import 'package:{{app_name}}/features/authentication/presentation/account/account_screen.dart';
+import 'package:{{app_name}}/features/authentication/presentation/sign_in/sign_in_screen.dart';
+import 'package:{{app_name}}/features/authentication/presentation/sign_up/sign_up_screen.dart';
+{{/avec_auth}}
+import 'package:{{app_name}}/features/home/presentation/home_screen.dart';
+import 'package:{{app_name}}/routing/app_startup.dart';
+{{#avec_auth}}
+import 'package:{{app_name}}/routing/go_router_refresh_stream.dart';
+{{/avec_auth}}
+import 'package:{{app_name}}/routing/not_found_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -22,6 +26,7 @@ enum AppRouter {
   /// The home screen.
   home,
 
+  {{#avec_auth}}
   /// The sign in screen.
   login,
 
@@ -30,39 +35,41 @@ enum AppRouter {
 
   /// The account screen.
   account,
+  {{/avec_auth}}
 }
 
 /// The application router provider.
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   final appStartupState = ref.watch(appStartupProvider);
+  {{#avec_auth}}
   final authRepository = ref.watch(authRepositoryProvider);
+  {{/avec_auth}}
 
   return GoRouter(
     initialLocation: '/',
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final path = state.uri.path;
-      final isLoggedIn = authRepository.currentUser != null;
-
       if (appStartupState.isLoading || appStartupState.hasError) {
         return '/${AppRouter.startup.name}';
       }
-
+      {{#avec_auth}}
+      final path = state.uri.path;
+      final isLoggedIn = authRepository.currentUser != null;
       if (isLoggedIn) {
-        if (path == '/${AppRouter.login.name}' || path == '/${AppRouter.signUp.name}') {
-          return '/';
-        }
+        if (path == '/${AppRouter.login.name}' || path == '/${AppRouter.signUp.name}') return '/';
       } else {
         if (path != '/${AppRouter.login.name}' && path != '/${AppRouter.signUp.name}') {
           return '/${AppRouter.login.name}';
         }
       }
-
+      {{/avec_auth}}
       return null;
     },
+    {{#avec_auth}}
     refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
+    {{/avec_auth}}
     routes: [
       GoRoute(
         path: '/${AppRouter.startup.name}',
@@ -74,6 +81,7 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/',
         name: AppRouter.home.name,
         pageBuilder: (context, state) => const NoTransitionPage(child: HomeScreen()),
+        {{#avec_auth}}
         routes: [
           GoRoute(
             path: AppRouter.account.name,
@@ -81,7 +89,9 @@ GoRouter goRouter(GoRouterRef ref) {
             pageBuilder: (context, state) => const NoTransitionPage(child: AccountScreen()),
           ),
         ],
+        {{/avec_auth}}
       ),
+      {{#avec_auth}}
       GoRoute(
         path: '/${AppRouter.login.name}',
         name: AppRouter.login.name,
@@ -92,6 +102,7 @@ GoRouter goRouter(GoRouterRef ref) {
         name: AppRouter.signUp.name,
         pageBuilder: (context, state) => const NoTransitionPage(child: SignUpScreen()),
       ),
+      {{/avec_auth}}
     ],
     errorPageBuilder: (context, state) => const NoTransitionPage(child: NotFoundScreen()),
   );
