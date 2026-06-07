@@ -1,12 +1,14 @@
+{{#avec_firebase}}
 import 'dart:async';
 
-{{#avec_firebase}}
 import 'package:firebase_messaging/firebase_messaging.dart';
 {{/avec_firebase}}
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+{{#avec_firebase}}
 import 'package:{{app_name}}/bootstrap.dart';
+{{/avec_firebase}}
 import 'package:{{app_name}}/constants/app_sizes.dart';
 import 'package:{{app_name}}/routing/app_router.dart';
 {{#avec_firebase}}

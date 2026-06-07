@@ -9,9 +9,11 @@ import 'package:{{app_name}}/features/authentication/data/auth_session.dart';
 import 'package:{{app_name}}/features/authentication/data/session_storage.dart';
 import 'package:{{app_name}}/features/authentication/domain/auth_repository.dart';
 {{/avec_auth}}
+{{#avec_auth}}
 {{#avec_firebase}}
 import 'package:{{app_name}}/utils/notification_service.dart';
 {{/avec_firebase}}
+{{/avec_auth}}
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_startup.g.dart';
