@@ -97,7 +97,9 @@ Future<void> run(HookContext context) async {
     '--delete-conflicting-outputs',
   ]);
   if (buildRunner.exitCode != 0) {
-    buildProgress.fail('build_runner failed:\n${buildRunner.stderr}');
+    buildProgress.fail(
+      'build_runner failed:\n${buildRunner.stdout}\n${buildRunner.stderr}',
+    );
     return;
   }
   buildProgress.complete('build_runner done.');
