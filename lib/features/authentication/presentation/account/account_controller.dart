@@ -21,14 +21,11 @@ class AccountController extends _$AccountController {
     final sessionStorage = ref.read(sessionStorageProvider);
 
     state = const AsyncLoading<void>();
-
-    try {
+    state = await AsyncValue.guard(() async {
       await authRepository.signOut();
       await sessionStorage.delete();
 
       await ref.read(notificationServiceProvider).unregisterDevice();
-    } catch (e) {
-      state = AsyncError<void>(e, StackTrace.current);
-    }
+    });
   }
 }
