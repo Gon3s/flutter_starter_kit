@@ -12,9 +12,8 @@ part 'auth_session.freezed.dart';
 class AuthSession extends _$AuthSession {
   @override
   AuthSessionState? build() {
-    return ref.watch(
-      appStartupProvider.select((data) => data.requireValue.authSession),
-    );
+    final dependencies = ref.watch(appStartupProvider).requireValue;
+    return dependencies.authSession;
   }
 
   /// Updates the authentication session with the provided [session].
@@ -42,7 +41,7 @@ class AuthSession extends _$AuthSession {
 
 /// This is a freezed class that generates the AuthSessionState class.
 @freezed
-class AuthSessionState with _$AuthSessionState {
+abstract class AuthSessionState with _$AuthSessionState {
   /// This is a data class that represents the state of the authentication session.
   const factory AuthSessionState({
     required AppUser user,

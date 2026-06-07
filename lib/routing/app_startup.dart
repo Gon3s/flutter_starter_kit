@@ -34,7 +34,7 @@ Future<AppDependencies> appStartup(Ref ref) async {
 
 /// Represents the dependencies required by the app.
 @freezed
-class AppDependencies with _$AppDependencies {
+abstract class AppDependencies with _$AppDependencies {
   /// Creates a new instance of the [AppDependencies] class.
   const factory AppDependencies({
     required AuthSessionState? authSession,

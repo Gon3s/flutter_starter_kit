@@ -5,7 +5,7 @@ part 'app_user.g.dart';
 
 /// Simple class representing a user of the app.
 @freezed
-class AppUser with _$AppUser {
+abstract class AppUser with _$AppUser {
   /// Creates a new instance of the [AppUser] class.
   const factory AppUser({
     required String uid,
