@@ -19,6 +19,44 @@ It can be used in three ways:
 
 ---
 
+## ⚡ Quick Start
+
+> **Recommended: generate a fresh project with Mason** (Firebase & auth are
+> optional). To work directly on this template instead, jump to
+> [Getting Started](#-getting-started).
+
+```bash
+# 1. Install the Mason CLI (once)
+dart pub global activate mason_cli
+
+# 2. Register the brick from a clone of this repo
+git clone https://github.com/gon3s/flutter_starter_kit.git
+mason add flutter_starter_kit --path ./flutter_starter_kit/brick
+
+# 3. Generate your project (you'll be prompted for app name, Firebase, auth…)
+mkdir my_app && cd my_app
+mason make flutter_starter_kit
+```
+
+The generator automatically runs `flutter pub get` + code generation. The
+generated project includes a **`CLAUDE.md`** and a **`new-feature` Claude Code
+skill** so you (and Claude) follow the architecture from the first commit.
+
+Then:
+
+```bash
+# If you enabled Firebase, configure your credentials
+flutterfire configure
+
+# Run the app (development flavor)
+flutter run -t lib/main_dev.dart
+```
+
+👉 Open `CLAUDE.md` in your generated project first — it lists the conventions,
+commands, and Riverpod/Freezed gotchas you need to know.
+
+---
+
 ## ✨ Features
 
 | Area | What you get |
@@ -241,6 +279,11 @@ mason make flutter_starter_kit
 > If `avec_auth` is `true`, `avec_firebase` must also be `true` (enforced by a
 > `pre_gen` hook). A `post_gen` hook runs `flutter pub get` + code generation and
 > removes unused directories.
+
+**Generated projects are Claude-ready:** they include a `CLAUDE.md` (conventions,
+commands, Riverpod/Freezed gotchas) and a `.claude/skills/new-feature` skill that
+scaffolds new features following the architecture — just ask Claude to
+*"add a feature"*.
 
 ### Auth feature brick (`bricks/flutter_auth_feature/`)
 

@@ -52,14 +52,25 @@ Future<void> run(HookContext context) async {
 
   context.logger.success('\nProject generated successfully!');
 
+  context.logger.info(
+    '\nThis project includes:\n'
+    '  - CLAUDE.md       : project conventions & commands for Claude/contributors\n'
+    "  - .claude/skills/ : a `new-feature` skill to scaffold features correctly",
+  );
+
   if (avecFirebase) {
     context.logger.info(
       '\nNext steps:\n'
-      '  1. Run `flutterfire configure` to generate lib/firebase_options.dart\n'
-      '  2. Add Firebase secrets to GitHub Actions\n'
-      '  3. Run your app with `flutter run`',
+      '  1. Read CLAUDE.md for conventions and commands\n'
+      '  2. Run `flutterfire configure` to generate lib/firebase_options.dart\n'
+      '  3. Add Firebase secrets to GitHub Actions\n'
+      '  4. Run your app with `flutter run -t lib/main_dev.dart`',
     );
   } else {
-    context.logger.info('\nNext steps:\n  1. Run your app with `flutter run`');
+    context.logger.info(
+      '\nNext steps:\n'
+      '  1. Read CLAUDE.md for conventions and commands\n'
+      '  2. Run your app with `flutter run -t lib/main_dev.dart`',
+    );
   }
 }

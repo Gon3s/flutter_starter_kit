@@ -4,9 +4,25 @@ A Flutter starter kit with Riverpod, GoRouter, Freezed, and optional Firebase + 
 
 ## Usage
 
+### Install Mason (once)
+
 ```bash
+dart pub global activate mason_cli
+```
+
+### Generate a project
+
+```bash
+# Register the brick (from a clone of this repo)
+mason add flutter_starter_kit --path ./brick
+
+# Generate into a new directory
+mkdir my_app && cd my_app
 mason make flutter_starter_kit
 ```
+
+You'll be prompted for the variables below. The `post_gen` hook then runs
+`flutter pub get` and `build_runner` automatically, and prints your next steps.
 
 ## Variables
 
@@ -27,6 +43,9 @@ mason make flutter_starter_kit
 - **Bootstrap** — error handlers, system UI, environment management
 - **Common widgets** — `PrimaryButton`, `EmptyPlaceholder`
 - **Utils** — `ColoredDebugPrinter`, `StringValidator`, `InMemoryStore`
+- **CLAUDE.md** — project conventions, commands and gotchas for Claude/contributors
+- **`.claude/skills/new-feature`** — a Claude Code skill to scaffold new features
+  following the architecture (data/domain/presentation + Riverpod + Freezed)
 
 ### With Firebase (`avec_firebase: true`)
 
@@ -57,5 +76,14 @@ mason make flutter_starter_kit
 Just run the app:
 
 ```bash
-flutter run
+flutter run -t lib/main_dev.dart
 ```
+
+## Working with Claude
+
+The generated project ships with a `CLAUDE.md` and a `new-feature` skill.
+Open the project in Claude Code and:
+
+- Claude automatically reads `CLAUDE.md` for conventions and commands.
+- Ask Claude to *"add a feature"* / *"create a screen"* to trigger the
+  `new-feature` skill, which scaffolds the feature following the architecture.
