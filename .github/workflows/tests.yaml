@@ -87,7 +87,7 @@ jobs:
         run: dart pub global activate mason_cli
 
       - name: Register brick
-        run: mason add flutter_starter_kit --path ./brick
+        run: mason add -g flutter_starter_kit --path ./brick
 
       - name: Write generation config
         run: |
