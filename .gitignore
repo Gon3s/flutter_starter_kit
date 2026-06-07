@@ -48,4 +48,4 @@ coverage
 GoogleService-Info.plist
 android/app/google-services.json
 firebase.json
-lib/firebase_options.dart
+# lib/firebase_options.dart is committed as a placeholder — overwrite locally with flutterfire configure
