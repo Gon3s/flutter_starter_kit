@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart' hide FirebaseOptions;
-import 'package:gones_starter_kit/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:gones_starter_kit/firebase_options.dart' show DefaultFirebaseOptions;
 import 'package:gones_starter_kit/utils/colored_debug_printer.dart';
 
 /// Enum to define different environments

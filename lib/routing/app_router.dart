@@ -8,6 +8,7 @@ import 'package:gones_starter_kit/features/home/presentation/home_screen.dart';
 import 'package:gones_starter_kit/routing/app_startup.dart';
 import 'package:gones_starter_kit/routing/go_router_refresh_stream.dart';
 import 'package:gones_starter_kit/routing/not_found_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -34,7 +35,7 @@ enum AppRouter {
 
 /// The application router provider.
 @riverpod
-GoRouter goRouter(GoRouterRef ref) {
+GoRouter goRouter(Ref ref) {
   final appStartupState = ref.watch(appStartupProvider);
   final authRepository = ref.watch(authRepositoryProvider);
 

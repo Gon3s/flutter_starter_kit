@@ -1,4 +1,5 @@
 import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gones_starter_kit/features/authentication/data/firebase_auth_repository.dart';
 import 'package:gones_starter_kit/features/authentication/domain/app_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -34,7 +35,7 @@ abstract class AuthRepository {
 
 /// Provide authentication repository.
 @riverpod
-AuthRepository authRepository(AuthRepositoryRef ref) {
+AuthRepository authRepository(Ref ref) {
   final auth = FirebaseAuthRepository();
   ref.onDispose(auth.dispose);
   return auth;

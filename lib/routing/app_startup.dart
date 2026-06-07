@@ -15,7 +15,7 @@ part 'app_startup.freezed.dart';
 
 /// The application startup provider.
 @Riverpod(keepAlive: true)
-Future<AppDependencies> appStartup(AppStartupRef ref) async {
+Future<AppDependencies> appStartup(Ref ref) async {
   final sessionStore = ref.watch(sessionStorageProvider);
 
   // * Load the session from the secure storage

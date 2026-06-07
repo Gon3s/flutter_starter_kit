@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gones_starter_kit/db/secure_storage.dart';
 import 'package:gones_starter_kit/features/authentication/data/auth_session.dart';
@@ -10,7 +11,7 @@ part 'session_storage.g.dart';
 @Riverpod(keepAlive: true)
 
 /// This is the provider for the SessionStorage class.
-SessionStorage sessionStorage(SessionStorageRef ref) {
+SessionStorage sessionStorage(Ref ref) {
   return SessionStorage(ref);
 }
 
@@ -19,7 +20,7 @@ class SessionStorage {
   ///
   SessionStorage(this._ref);
 
-  final SessionStorageRef _ref;
+  final Ref _ref;
 
   FlutterSecureStorage get _storage => _ref.read(secureStorageProvider);
 
@@ -39,9 +40,7 @@ class SessionStorage {
   Future<void> write(AuthSessionState session) async {
     await _storage.write(
       key: _kSessionStorageKey,
-      value: jsonEncode(
-        session.toJson(),
-      ),
+      value: jsonEncode(session.toJson()),
     );
   }
 

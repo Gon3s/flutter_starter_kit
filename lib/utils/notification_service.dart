@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gones_starter_kit/utils/colored_debug_printer.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -6,7 +7,7 @@ part 'notification_service.g.dart';
 
 /// A reference to the [NotificationService].
 @Riverpod(keepAlive: true)
-NotificationService notificationService(NotificationServiceRef ref) {
+NotificationService notificationService(Ref ref) {
   return NotificationService(ref: ref);
 }
 
@@ -16,12 +17,11 @@ class NotificationService {
   NotificationService({required this.ref});
 
   ///
-  final NotificationServiceRef ref;
+  final Ref ref;
 
   /// Register the device for push notifications.
   Future<void> registerDevice() async {
     final token = await FirebaseMessaging.instance.getToken();
-
     if (token != null) {
       registerToken(token);
     }
